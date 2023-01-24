@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float jumpForce;
     public float rotateSpeed;
-    public float gravityScale = 5f;
+    public float gravityScale = 3f;
 
     public CharacterController charController;
     public Camera playerCamera;
@@ -38,6 +38,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (charController.isGrounded && moveDirection.y < 0)
+        {
+            moveDirection.y = -1.0f;
+            if (Input.GetKeyDown("space"))
+            {
+                moveDirection.y = jumpForce;
+            }
+        }
+        else
+        {
+            moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
+        }
+
         if (!isKnocking)
         {
             float yStore = moveDirection.y;
@@ -47,16 +60,8 @@ public class PlayerController : MonoBehaviour
             moveDirection = moveDirection * moveSpeed;
             moveDirection.y = yStore;
 
-           /* if (charController.isGrounded)
-            {
-
-                if (Input.GetKeyDown("space"))
-                {
-                    moveDirection.y = jumpForce;
-                }
-            }*/
-
-            moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
+            
+            
 
             charController.Move(moveDirection * Time.deltaTime);
 
