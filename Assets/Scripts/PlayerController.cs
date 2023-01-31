@@ -54,7 +54,6 @@ public class PlayerController : MonoBehaviour
         if (!isKnocking)
         {
             float yStore = moveDirection.y;
-            //moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
             moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
             moveDirection.Normalize();
             moveDirection = moveDirection * moveSpeed;
@@ -76,7 +75,15 @@ public class PlayerController : MonoBehaviour
         {
             knockBackCounter -= Time.deltaTime;
 
-            if(knockBackCounter <= 0)
+            float yStore = moveDirection.y;
+            moveDirection = (playerModel.transform.forward * knockBackPower.x);
+            moveDirection.y = yStore;
+
+            moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
+
+            charController.Move(moveDirection * Time.deltaTime);
+
+            if (knockBackCounter <= 0)
             {
                 isKnocking = false;
             }
@@ -84,8 +91,8 @@ public class PlayerController : MonoBehaviour
         
 
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
-       // animator.SetBool("isGrounded", charController.isGrounded);
-
+        animator.SetBool("isGrounded", charController.isGrounded);
+        
     }
     
     public void Knockback()
@@ -93,5 +100,7 @@ public class PlayerController : MonoBehaviour
         isKnocking = true;
         knockBackCounter = knockBackLength;
         Debug.Log("knockback");
+        moveDirection.y = knockBackPower.y;
+        charController.Move(moveDirection * Time.deltaTime);
     }
 }

@@ -6,9 +6,10 @@ public class HealthManager : MonoBehaviour
 {
     public static HealthManager instance;
 
-    public int currentHealth, maxHealth;
+    public int currentHealth;
+    public int maxHealth= 3;
 
-    public float invincibleLength = 2f;
+    public float invincibleLength = 1f;
     private float invincibleCounter;
     public void Awake()
     {
@@ -25,6 +26,23 @@ public class HealthManager : MonoBehaviour
         if(invincibleCounter > 0)
         {
             invincibleCounter -= Time.deltaTime;
+
+            for (int i = 0; i < PlayerController.instance.playerParts.Length; i++)
+            {
+                if (Mathf.Floor(invincibleCounter * 5f) % 2 == 0)
+                {
+                    PlayerController.instance.playerParts[i].SetActive(true);
+                }
+                else
+                {
+                    PlayerController.instance.playerParts[i].SetActive(false);
+                }
+
+                if (invincibleCounter <= 0)
+                {
+                    PlayerController.instance.playerParts[i].SetActive(true);
+                }
+            }
         }
     }
 
@@ -37,6 +55,7 @@ public class HealthManager : MonoBehaviour
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
+                GameManager.instance.GameOver();
             }
             else
             {
@@ -45,5 +64,17 @@ public class HealthManager : MonoBehaviour
             }
         }
         
+    }
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+    }
+    public void AddHealth(int amountToHeal)
+    {
+        currentHealth = +amountToHeal;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
     }
 }

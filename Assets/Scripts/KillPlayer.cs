@@ -1,23 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class KillPlayer : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
-            Debug.Log("You died");
+            GameManager.instance.GameOver();
         }
     }
 }
