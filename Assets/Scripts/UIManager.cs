@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI healthText;
     public Image healthImage;
 
+    public TextMeshProUGUI pointsText;
+
 
     public void Awake()
     {

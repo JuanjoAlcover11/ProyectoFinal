@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     private PlayerController playerControllerScript;
 
+    public int currentPoints;
+
     private void Awake()
     {
         instance = this;
@@ -41,5 +43,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("You died");
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("GameOver");
+    }
+
+    public void addPoints(int pointsToAd)
+    {
+        currentPoints += pointsToAd;
+        UIManager.instance.pointsText.text = "" + currentPoints;
     }
 }
