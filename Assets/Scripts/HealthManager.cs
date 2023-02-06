@@ -15,9 +15,16 @@ public class HealthManager : MonoBehaviour
 
     public Sprite[] healthBarImages;
 
-    public void Awake()
+    private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     void Start()
     {
@@ -65,6 +72,7 @@ public class HealthManager : MonoBehaviour
             {
                 PlayerController.instance.Knockback();
                 invincibleCounter = invincibleLength;
+                UpdateUI();
             }
         }
         
@@ -77,7 +85,7 @@ public class HealthManager : MonoBehaviour
     }
     public void AddHealth(int amountToHeal)
     {
-        currentHealth = +amountToHeal;
+        currentHealth += amountToHeal;
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
@@ -91,10 +99,8 @@ public class HealthManager : MonoBehaviour
 
         switch (currentHealth)
         {
-            case 4:
-                UIManager.instance.healthImage.sprite = healthBarImages[3];
-                break;
             case 3:
+                Debug.Log("case 3");
                 UIManager.instance.healthImage.sprite = healthBarImages[2];
                 break;
             case 2:

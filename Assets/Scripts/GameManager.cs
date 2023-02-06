@@ -14,7 +14,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
@@ -48,6 +55,6 @@ public class GameManager : MonoBehaviour
     public void addPoints(int pointsToAd)
     {
         currentPoints += pointsToAd;
-        UIManager.instance.pointsText.text = "" + currentPoints;
+        UIManager.instance.pointsText.text = currentPoints.ToString();
     }
 }

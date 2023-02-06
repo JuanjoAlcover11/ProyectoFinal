@@ -17,15 +17,29 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI pointsText;
 
+    public GameObject optionsPanel;
 
-    public void Awake()
+
+    private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void Start()
+    public void OpenOptions()
     {
-        
+        optionsPanel.SetActive(true);
+    }
+
+    public void CloseOptions()
+    {
+        optionsPanel.SetActive(false);
     }
 
     // Update is called once per frame

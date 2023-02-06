@@ -12,7 +12,14 @@ public class SceneManagment : MonoBehaviour
     public static SceneManagment instance;
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     public void Restart()
     {//Game scene

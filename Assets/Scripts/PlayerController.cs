@@ -26,9 +26,16 @@ public class PlayerController : MonoBehaviour
 
     public GameObject[] playerParts;
 
-    public void Awake()
+    private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     void Start()
     {

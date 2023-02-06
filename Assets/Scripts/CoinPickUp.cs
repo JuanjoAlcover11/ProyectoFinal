@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoinPickUp : MonoBehaviour
 {
-    public int value = 1;
+    private int value = 1;
 
     public GameObject coinEffect;
 
