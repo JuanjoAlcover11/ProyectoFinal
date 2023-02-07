@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject[] playerParts;
 
+
+
     private void Awake()
     {
         if (instance == null)
@@ -37,10 +39,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -51,6 +50,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown("space"))
             {
                 moveDirection.y = jumpForce;
+                animator.SetBool("isAttacking", false);
             }
         }
         else
@@ -66,8 +66,6 @@ public class PlayerController : MonoBehaviour
             moveDirection = moveDirection * moveSpeed;
             moveDirection.y = yStore;
 
-            
-            
 
             charController.Move(moveDirection * Time.deltaTime);
 
@@ -76,7 +74,14 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, playerCamera.transform.rotation.eulerAngles.y, 0f);
                 Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
                 playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
+                animator.SetBool("isAttacking", false);
             }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                animator.SetBool("isAttacking", true);
+            }
+
         }
         else if (isKnocking)
         {
@@ -90,13 +95,14 @@ public class PlayerController : MonoBehaviour
 
             charController.Move(moveDirection * Time.deltaTime);
 
+            animator.SetBool("isAttacking", false);
+
             if (knockBackCounter <= 0)
             {
                 isKnocking = false;
             }
         }
         
-
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
         animator.SetBool("isGrounded", charController.isGrounded);
         
@@ -106,8 +112,9 @@ public class PlayerController : MonoBehaviour
     {
         isKnocking = true;
         knockBackCounter = knockBackLength;
-        Debug.Log("knockback");
         moveDirection.y = knockBackPower.y;
         charController.Move(moveDirection * Time.deltaTime);
     }
+
+   
 }

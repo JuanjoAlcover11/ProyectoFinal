@@ -5,115 +5,109 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public NavMeshAgent agent;
+    public static EnemyAI instance;
 
-    public Transform player;
+    public int rutine;
+    public float crono;
+    public Animator enemyAnimator;
+    public Quaternion angle;
+    public float angleX;
 
-    public LayerMask whatIsGround, whatIsPlayer;
+    public GameObject target;
+    public bool isAttacking;
 
-    public float health;
+    public float enemyHealth;
 
-    //Patroling
-    public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkPointRange;
-
-    //Attacking
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
-    public GameObject projectile;
-
-    //States
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
 
     private void Awake()
     {
-        player = GameObject.Find("PlayerObj").transform;
-        agent = GetComponent<NavMeshAgent>();
-    }
-
-    private void Update()
-    {
-        //Check for sight and attack range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
-    }
-
-    private void Patroling()
-    {
-        if (!walkPointSet) SearchWalkPoint();
-
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
-            walkPointSet = false;
-    }
-    private void SearchWalkPoint()
-    {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-            walkPointSet = true;
-    }
-
-    private void ChasePlayer()
-    {
-        agent.SetDestination(player.position);
-    }
-
-    private void AttackPlayer()
-    {
-        //Make sure enemy doesn't move
-        agent.SetDestination(transform.position);
-
-        transform.LookAt(player);
-
-        if (!alreadyAttacked)
+        if (instance == null)
         {
-            ///Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            ///End of attack code
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
-    private void ResetAttack()
+    void Start()
     {
-        alreadyAttacked = false;
+        enemyAnimator = GetComponent<Animator>();
+        target = GameObject.Find("Player1");
+    }  
+
+    public void EnemyBehaviour()
+    {
+        if (Vector3.Distance(transform.position, target.transform.position) > 5)
+        {
+            enemyAnimator.SetBool("Run Forward", false);
+            crono += 1 * Time.deltaTime;
+            if (crono >= 4)
+            {
+                rutine = Random.Range(0, 2);
+                crono = 0;
+            }
+            switch (rutine)
+            {
+                case 0:
+                    enemyAnimator.SetBool("Walk Forward", false);
+                    break;
+                case 1:
+                    angleX = Random.Range(0, 360);
+                    angle = Quaternion.Euler(0, angleX, 0);
+                    rutine++;
+                    break;
+                case 2:
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, angle, 0.5f);
+                    transform.Translate(Vector3.forward * 1 * Time.deltaTime);
+                    enemyAnimator.SetBool("Walk Forward", true);
+                    break;
+            }
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, target.transform.position) > 1 && !isAttacking)
+            {
+                var lookPos = target.transform.position - transform.position;
+                lookPos.y = 0;
+                var rotation = Quaternion.LookRotation(lookPos);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 3);
+                enemyAnimator.SetBool("Walk Forward", false);
+
+                enemyAnimator.SetBool("Run Forward", true);
+                transform.Translate(Vector3.forward * 2 * Time.deltaTime);
+
+                enemyAnimator.SetBool("Attack 01", false);
+            }
+            else
+            {
+                enemyAnimator.SetBool("Walk Forward", false);
+                enemyAnimator.SetBool("Run Forward", false);
+                enemyAnimator.SetBool("Attack 01", true);
+                isAttacking = true;
+            }
+        }
     }
 
-    public void TakeDamage(int damage)
+    public void FinalAni()
     {
-        health -= damage;
-
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
-    private void DestroyEnemy()
-    {
-        Destroy(gameObject);
+        enemyAnimator.SetBool("Attack 01", false);
+        isAttacking = false;
     }
 
-    private void OnDrawGizmosSelected()
+    public void enemyDamage()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
+        enemyHealth--;
+
+        if(enemyHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+    void Update()
+    {
+        EnemyBehaviour();
     }
 }

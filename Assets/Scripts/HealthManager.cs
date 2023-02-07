@@ -10,7 +10,7 @@ public class HealthManager : MonoBehaviour
     public int currentHealth;
     public int maxHealth= 3;
 
-    public float invincibleLength = 1f;
+    public float invincibleLength = 0.5f;
     private float invincibleCounter;
 
     public Sprite[] healthBarImages;
@@ -100,7 +100,6 @@ public class HealthManager : MonoBehaviour
         switch (currentHealth)
         {
             case 3:
-                Debug.Log("case 3");
                 UIManager.instance.healthImage.sprite = healthBarImages[2];
                 break;
             case 2:
