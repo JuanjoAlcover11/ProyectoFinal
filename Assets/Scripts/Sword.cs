@@ -6,10 +6,12 @@ public class Sword : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        
+        if (other.gameObject.tag == "Enemy")
         {
             EnemyAI.instance.enemyDamage();
             Debug.Log("Attack");
+
         }
     }
 }

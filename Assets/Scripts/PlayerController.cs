@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject[] playerParts;
 
+    private bool isAttacking;
+
 
 
     private void Awake()
@@ -44,13 +46,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isAttacking = false;
+
         if (charController.isGrounded && moveDirection.y < 0)
         {
             moveDirection.y = -1.0f;
             if (Input.GetKeyDown("space"))
             {
                 moveDirection.y = jumpForce;
-                animator.SetBool("isAttacking", false);
+               // animator.SetBool("isAttacking", false);
             }
         }
         else
@@ -74,12 +78,12 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, playerCamera.transform.rotation.eulerAngles.y, 0f);
                 Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
                 playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
-                animator.SetBool("isAttacking", false);
+                //animator.SetBool("isAttacking", false);
             }
 
             if (Input.GetMouseButtonDown(0))
             {
-                animator.SetBool("isAttacking", true);
+                isAttacking = true;
             }
 
         }
@@ -95,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
             charController.Move(moveDirection * Time.deltaTime);
 
-            animator.SetBool("isAttacking", false);
+           // animator.SetBool("isAttacking", false);
 
             if (knockBackCounter <= 0)
             {
@@ -116,5 +120,9 @@ public class PlayerController : MonoBehaviour
         charController.Move(moveDirection * Time.deltaTime);
     }
 
-   
+    private void LateUpdate()
+    {
+        animator.SetBool("isAttacking", isAttacking);
+    }
+
 }

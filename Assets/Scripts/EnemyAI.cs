@@ -18,6 +18,12 @@ public class EnemyAI : MonoBehaviour
 
     public float enemyHealth;
 
+    public GameObject enemyEffect;
+
+    public BoxCollider colliderWeapon;
+    private GameObject enemyWeapon;
+
+    public GameObject itemDrop;
 
     private void Awake()
     {
@@ -34,7 +40,20 @@ public class EnemyAI : MonoBehaviour
     {
         enemyAnimator = GetComponent<Animator>();
         target = GameObject.Find("Player1");
-    }  
+
+        //colliderWeapon = enemyWeapon.GetComponent<BoxCollider>();
+
+        colliderWeapon.enabled = false;
+    }
+
+    private void Attackstart()
+    {
+        colliderWeapon.enabled = true;
+    }
+    private void AttackEnd()
+    {
+        colliderWeapon.enabled = false;
+    }
 
     public void EnemyBehaviour()
     {
@@ -99,12 +118,15 @@ public class EnemyAI : MonoBehaviour
     {
         enemyHealth--;
 
-        if(enemyHealth <= 0)
+        if (enemyHealth <= 0)
         {
+            Instantiate(enemyEffect, transform.position, transform.rotation);
+            Instantiate(itemDrop, transform.position, angle);
             Destroy(gameObject);
         }
 
     }
+
 
     void Update()
     {
