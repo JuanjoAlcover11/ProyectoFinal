@@ -19,11 +19,12 @@ public class EnemyAI : MonoBehaviour
     public float enemyHealth;
 
     public GameObject enemyEffect;
+    public GameObject enemyCoinEffect;
 
     public BoxCollider colliderWeapon;
     private GameObject enemyWeapon;
 
-    public GameObject itemDrop;
+    public int value = 1;
 
     private void Awake()
     {
@@ -57,7 +58,7 @@ public class EnemyAI : MonoBehaviour
 
     public void EnemyBehaviour()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) > 5)
+        if (Vector3.Distance(transform.position, target.transform.position) > 10)
         {
             enemyAnimator.SetBool("Run Forward", false);
             crono += 1 * Time.deltaTime;
@@ -121,7 +122,8 @@ public class EnemyAI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             Instantiate(enemyEffect, transform.position, transform.rotation);
-            Instantiate(itemDrop, transform.position, angle);
+            Instantiate(enemyCoinEffect, transform.position, transform.rotation);
+            GameManager.instance.addPoints(value);
             Destroy(gameObject);
         }
 

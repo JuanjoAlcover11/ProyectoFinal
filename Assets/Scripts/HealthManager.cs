@@ -66,6 +66,7 @@ public class HealthManager : MonoBehaviour
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
+                PlayerController.instance.PlayerDeath();
                 GameManager.instance.GameOver();
             }
             else
@@ -99,6 +100,12 @@ public class HealthManager : MonoBehaviour
 
         switch (currentHealth)
         {
+            case 5:
+                UIManager.instance.healthImage.sprite = healthBarImages[4];
+                break;
+            case 4:
+                UIManager.instance.healthImage.sprite = healthBarImages[3];
+                break;
             case 3:
                 UIManager.instance.healthImage.sprite = healthBarImages[2];
                 break;

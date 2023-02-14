@@ -12,6 +12,7 @@ public class KillPlayer : MonoBehaviour
         if(other.tag == "Player")
         {
             GameManager.instance.GameOver();
+            PlayerController.instance.PlayerDeath();
         }
     }
 }

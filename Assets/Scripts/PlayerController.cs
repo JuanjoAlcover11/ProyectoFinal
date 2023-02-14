@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isAttacking;
 
-
+    private bool isGameOver;
 
     private void Awake()
     {
@@ -42,74 +42,81 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        isGameOver = false;
+    }
 
     // Update is called once per frame
     void Update()
     {
         isAttacking = false;
 
-        if (charController.isGrounded && moveDirection.y < 0)
+        if (isGameOver == false)
         {
-            moveDirection.y = -1.0f;
-            if (Input.GetKeyDown("space"))
+            if (charController.isGrounded && moveDirection.y < 0)
             {
-                moveDirection.y = jumpForce;
-               // animator.SetBool("isAttacking", false);
+                moveDirection.y = -1.0f;
+                if (Input.GetKeyDown("space"))
+                {
+                    moveDirection.y = jumpForce;
+                    // animator.SetBool("isAttacking", false);
+                }
             }
-        }
-        else
-        {
-            moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
-        }
-
-        if (!isKnocking)
-        {
-            float yStore = moveDirection.y;
-            moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
-            moveDirection.Normalize();
-            moveDirection = moveDirection * moveSpeed;
-            moveDirection.y = yStore;
-
-
-            charController.Move(moveDirection * Time.deltaTime);
-
-            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+            else
             {
-                transform.rotation = Quaternion.Euler(0f, playerCamera.transform.rotation.eulerAngles.y, 0f);
-                Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
-                playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
-                //animator.SetBool("isAttacking", false);
+                moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (!isKnocking)
             {
-                isAttacking = true;
+                float yStore = moveDirection.y;
+                moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
+                moveDirection.Normalize();
+                moveDirection = moveDirection * moveSpeed;
+                moveDirection.y = yStore;
+
+
+                charController.Move(moveDirection * Time.deltaTime);
+
+                if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                {
+                    transform.rotation = Quaternion.Euler(0f, playerCamera.transform.rotation.eulerAngles.y, 0f);
+                    Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
+                    playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
+                    //animator.SetBool("isAttacking", false);
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    isAttacking = true;
+                }
+
+            }
+            else if (isKnocking)
+            {
+                knockBackCounter -= Time.deltaTime;
+
+                float yStore = moveDirection.y;
+                moveDirection = (playerModel.transform.forward * knockBackPower.x);
+                moveDirection.y = yStore;
+
+                moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
+
+                charController.Move(moveDirection * Time.deltaTime);
+
+                // animator.SetBool("isAttacking", false);
+
+                if (knockBackCounter <= 0)
+                {
+                    isKnocking = false;
+                }
             }
 
+            animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
+            animator.SetBool("isGrounded", charController.isGrounded);
+
         }
-        else if (isKnocking)
-        {
-            knockBackCounter -= Time.deltaTime;
-
-            float yStore = moveDirection.y;
-            moveDirection = (playerModel.transform.forward * knockBackPower.x);
-            moveDirection.y = yStore;
-
-            moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
-
-            charController.Move(moveDirection * Time.deltaTime);
-
-           // animator.SetBool("isAttacking", false);
-
-            if (knockBackCounter <= 0)
-            {
-                isKnocking = false;
-            }
-        }
-        
-        animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
-        animator.SetBool("isGrounded", charController.isGrounded);
-        
     }
     
     public void Knockback()
@@ -125,4 +132,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isAttacking", isAttacking);
     }
 
+    public void PlayerDeath()
+    {
+        isGameOver = true;
+    }
 }
