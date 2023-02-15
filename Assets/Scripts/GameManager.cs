@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public int currentPoints;
 
+    public GameObject panelUI;
+
     private void Awake()
     {
         if(instance == null)
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         playerControllerScript = FindObjectOfType<PlayerController>();
+        panelUI.SetActive(true);
     }
 
 
@@ -45,6 +48,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator GameOverWait()
     {
         UIManager.instance.fadeToBlack = true;
+        panelUI.SetActive(false);
         playerControllerScript.animator.SetBool("isDead", true);
         yield return new WaitForSeconds(2f);
         Debug.Log("You died");
