@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Debug.Log("You died");
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene("GameOver");
     }
 
