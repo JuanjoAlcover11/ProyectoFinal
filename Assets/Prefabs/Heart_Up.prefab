@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healAmount: 3
-  isHealthFull: 0
+  isHealthFull: 1
   heartParticle: {fileID: 2354623581781592002, guid: e575c7d185125124286b3d1d7ffe9928,
     type: 3}
 --- !u!1001 &3004244933047996752

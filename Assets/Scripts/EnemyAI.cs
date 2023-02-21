@@ -56,12 +56,20 @@ public class EnemyAI : MonoBehaviour
         colliderWeapon.enabled = false;
     }
 
+    private void LateUpdate()
+    {
+        enemyAnimator.SetBool("Attack 01", isAttacking);
+    }
+
     public void EnemyBehaviour()
     {
         if (Vector3.Distance(transform.position, target.transform.position) > 10)
         {
             enemyAnimator.SetBool("Run Forward", false);
             crono += 1 * Time.deltaTime;
+            isAttacking = false;
+            
+            
             if (crono >= 4)
             {
                 rutine = Random.Range(0, 2);
@@ -97,13 +105,13 @@ public class EnemyAI : MonoBehaviour
                 enemyAnimator.SetBool("Run Forward", true);
                 transform.Translate(Vector3.forward * 2 * Time.deltaTime);
 
-                enemyAnimator.SetBool("Attack 01", false);
+                isAttacking = false;
             }
             else
             {
                 enemyAnimator.SetBool("Walk Forward", false);
                 enemyAnimator.SetBool("Run Forward", false);
-                enemyAnimator.SetBool("Attack 01", true);
+
                 isAttacking = true;
             }
         }
@@ -133,5 +141,9 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         EnemyBehaviour();
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log(Vector3.Distance(transform.position, target.transform.position));
+        }
     }
 }

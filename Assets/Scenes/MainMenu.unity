@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 2441c79940171dc43b33badf9fe97828, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 528363c5c1cf6a7458140c6851c77b68, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4693825, g: 0.19594328, b: 0.14082982, a: 1}
+  m_IndirectSpecularColor: {r: 0.12584385, g: 0.13377985, b: 0.31933963, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,10 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 939e9fa1f20c5c3489014aecc73c484e,
+    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 5f8c179f6cc2960458491ae63f7d6571,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -905,7 +907,7 @@ RectTransform:
   m_GameObject: {fileID: 382311186}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.9998085, y: 1.9998085, z: 1.9998085}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 274365328}
@@ -1727,7 +1729,7 @@ RectTransform:
   m_GameObject: {fileID: 786302515}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.1136, y: 2.1136, z: 2.1136}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2087082824}
@@ -1821,7 +1823,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -427.4, y: -202.7}
+  m_AnchoredPosition: {x: -312, y: -202.7}
   m_SizeDelta: {x: 140.8, y: 54.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &917784197
@@ -1978,7 +1980,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 447, y: 177}
+  m_AnchoredPosition: {x: 417, y: 217}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &925046081
@@ -2935,7 +2937,7 @@ PrefabInstance:
     - target: {fileID: 1902742749987364289, guid: 97c095058912fea41a8a6ffffb99a15a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.32
+      value: 4.67
       objectReference: {fileID: 0}
     - target: {fileID: 1902742749987364289, guid: 97c095058912fea41a8a6ffffb99a15a,
         type: 3}

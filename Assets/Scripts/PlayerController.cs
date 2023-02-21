@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isGameOver;
 
+    public GameObject swordParticle;
+
     private void Awake()
     {
         if (instance == null)
@@ -90,6 +92,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     isAttacking = true;
+                    Instantiate(swordParticle, transform.position, transform.rotation);
                 }
 
             }
