@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
 
     void Start()
     {
-        weapon = pivotWeapon.GetChild(0).gameObject;
+        weapon = pivotWeapon.GetChild(1).gameObject;
         colliderWeapon = weapon.GetComponent<BoxCollider>();
 
         colliderWeapon.enabled = false;
