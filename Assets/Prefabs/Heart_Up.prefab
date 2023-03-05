@@ -131,6 +131,7 @@ MonoBehaviour:
   isHealthFull: 1
   heartParticle: {fileID: 2354623581781592002, guid: e575c7d185125124286b3d1d7ffe9928,
     type: 3}
+  heartSound: 1
 --- !u!1001 &3004244933047996752
 PrefabInstance:
   m_ObjectHideFlags: 0

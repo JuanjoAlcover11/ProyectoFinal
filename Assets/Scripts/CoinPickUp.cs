@@ -8,6 +8,8 @@ public class CoinPickUp : MonoBehaviour
 
     public GameObject coinEffect;
 
+    public int coinSound;
+
     void Start()
     {
         
@@ -25,6 +27,7 @@ public class CoinPickUp : MonoBehaviour
             GameManager.instance.addPoints(value);
             Destroy(gameObject);
             Instantiate(coinEffect, transform.position, transform.rotation);
+            AudioManager.instance.PlaySFX(coinSound);
         }
     }
 }

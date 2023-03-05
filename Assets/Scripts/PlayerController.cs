@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
 
     private bool isGameOver;
 
+    public int jumpSound;
+    public int swordSound;
+    public int deathSound;
+
     //public GameObject swordParticle;
 
     private void Awake()
@@ -62,6 +66,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown("space"))
                 {
                     moveDirection.y = jumpForce;
+                    AudioManager.instance.PlaySFX(jumpSound);
                     // animator.SetBool("isAttacking", false);
                 }
             }
@@ -92,6 +97,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     isAttacking = true;
+                    AudioManager.instance.PlaySFX(swordSound);
                     //Instantiate(swordParticle, transform.position, transform.rotation);
                 }
 
@@ -138,5 +144,6 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath()
     {
         isGameOver = true;
+        AudioManager.instance.PlaySFX(deathSound);
     }
 }

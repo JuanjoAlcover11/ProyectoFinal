@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject optionsPanel;
 
+    public Slider musicSlider, sfxSlider;
 
     private void Awake()
     {
@@ -42,7 +43,15 @@ public class UIManager : MonoBehaviour
         optionsPanel.SetActive(false);
     }
 
-    // Update is called once per frame
+    public void SetMusicLevel()
+    {
+        AudioManager.instance.SetMusicLevel();
+    }
+    public void SetSFXLevel()
+    {
+        AudioManager.instance.SetSFXLevel();
+    }
+
     void Update()
     {
         if (fadeToBlack)

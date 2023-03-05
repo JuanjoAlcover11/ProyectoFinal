@@ -128,3 +128,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinEffect: {fileID: 162331687339720211, guid: 739e3e8ceb17ef24a82a2dd75a372a6f,
     type: 3}
+  coinSound: 0

@@ -9,6 +9,8 @@ public class HealthUp : MonoBehaviour
 
     public GameObject heartParticle;
 
+    public int heartSound;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -16,6 +18,8 @@ public class HealthUp : MonoBehaviour
             Destroy(gameObject);
 
             Instantiate(heartParticle, PlayerController.instance.transform.position + new Vector3(0f, 1f, 0f), PlayerController.instance.transform.rotation);
+
+            AudioManager.instance.PlaySFX(heartSound);
 
             if (isHealthFull)
             {
