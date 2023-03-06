@@ -611,15 +611,18 @@ MonoBehaviour:
   angleX: 0
   target: {fileID: 0}
   isAttacking: 0
-  enemyHealth: 1
+  enemyHealth: 3
   enemyEffect: {fileID: 7956393501743200752, guid: f52791f5934205b42925cd78888db5af,
     type: 3}
   enemyCoinEffect: {fileID: 8183270776191175994, guid: 253580dd916a0c94b8626bc269994257,
     type: 3}
+  enemyHit: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7,
+    type: 3}
   colliderWeapon: {fileID: 2066332774}
   value: 5
-  enemyModel: {fileID: 0}
-  knockBackPower: {x: 0, y: 0}
+  enemyHitSound: 6
+  enemyAttackSound: 8
+  enemyDeathSound: 9
 --- !u!54 &2133295568
 Rigidbody:
   m_ObjectHideFlags: 0

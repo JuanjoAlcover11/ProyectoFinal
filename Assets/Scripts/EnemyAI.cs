@@ -20,13 +20,15 @@ public class EnemyAI : MonoBehaviour
 
     public GameObject enemyEffect;
     public GameObject enemyCoinEffect;
+    public GameObject enemyHit;
 
     public BoxCollider colliderWeapon;
     private GameObject enemyWeapon;
 
     public int value = 1;
-
-
+    public int enemyHitSound;
+    public int enemyAttackSound;
+    public int enemyDeathSound;
 
     void Start()
     {
@@ -41,6 +43,7 @@ public class EnemyAI : MonoBehaviour
     private void Attackstart()
     {
         colliderWeapon.enabled = true;
+        AudioManager.instance.PlaySFX(enemyAttackSound);
     }
     private void AttackEnd()
     {
@@ -122,11 +125,14 @@ public class EnemyAI : MonoBehaviour
     public void enemyDamage()
     {
         enemyHealth--;
+        AudioManager.instance.PlaySFX(enemyHitSound);
+        Instantiate(enemyHit, transform.position, transform.rotation);
 
         if (enemyHealth <= 0)
         {
             Instantiate(enemyEffect, transform.position, transform.rotation);
             Instantiate(enemyCoinEffect, transform.position, transform.rotation);
+            AudioManager.instance.PlaySFX(enemyDeathSound);
             GameManager.instance.addPoints(value);
             Destroy(gameObject);
         }
@@ -143,9 +149,5 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         EnemyBehaviour();
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log(Vector3.Distance(transform.position, target.transform.position));
-        }
     }
 }

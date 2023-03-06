@@ -62,4 +62,9 @@ public class GameManager : MonoBehaviour
         currentPoints += pointsToAd;
         UIManager.instance.pointsText.text = currentPoints.ToString();
     }
+
+    public void saveContador()
+    {
+        DataPersistance.PlayerStats.currentScore = currentPoints;//When you die, we save your score
+    }
 }

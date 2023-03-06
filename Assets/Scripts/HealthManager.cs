@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 
 public class HealthManager : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class HealthManager : MonoBehaviour
 
     public Sprite[] healthBarImages;
 
+    private Volume volume;
     private void Awake()
     {
         if (instance == null)

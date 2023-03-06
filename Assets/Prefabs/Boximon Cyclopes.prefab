@@ -245,8 +245,13 @@ MonoBehaviour:
     type: 3}
   enemyCoinEffect: {fileID: 318846268906302305, guid: 1650110b677428e4dbf9e698240576d2,
     type: 3}
+  enemyHit: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7,
+    type: 3}
   colliderWeapon: {fileID: 1485037456587085105}
   value: 3
+  enemyHitSound: 6
+  enemyAttackSound: 7
+  enemyDeathSound: 9
 --- !u!65 &180740491
 BoxCollider:
   m_ObjectHideFlags: 0
