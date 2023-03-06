@@ -8,8 +8,10 @@ public class PlatformAttach : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == Player)
+        Debug.Log("a");
+        if (other.gameObject == Player)
         {
+            
             Player.transform.parent = transform;
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public static EnemyAI instance;
+    //public static EnemyAI instance;
 
     public int rutine;
     public float crono;
@@ -26,17 +26,8 @@ public class EnemyAI : MonoBehaviour
 
     public int value = 1;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+
+
     void Start()
     {
         enemyAnimator = GetComponent<Animator>();
@@ -123,6 +114,11 @@ public class EnemyAI : MonoBehaviour
         isAttacking = false;
     }
 
+    public void FinalAni2()
+    {
+        enemyAnimator.SetBool("Damage", false);
+    }
+
     public void enemyDamage()
     {
         enemyHealth--;
@@ -133,6 +129,12 @@ public class EnemyAI : MonoBehaviour
             Instantiate(enemyCoinEffect, transform.position, transform.rotation);
             GameManager.instance.addPoints(value);
             Destroy(gameObject);
+        }
+        else
+        {
+            enemyAnimator.SetBool("Attack 01", false);
+            enemyAnimator.SetBool("Damage", true);
+            isAttacking = false;
         }
 
     }

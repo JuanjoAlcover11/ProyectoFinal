@@ -9,7 +9,7 @@ public class Sword : MonoBehaviour
         
         if (other.gameObject.tag == "Enemy")
         {
-            EnemyAI.instance.enemyDamage();
+            other.gameObject.GetComponent<EnemyAI>().enemyDamage();
             Debug.Log("Attack");
 
         }
