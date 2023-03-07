@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    //public static EnemyAI instance;
 
     public int rutine;
     public float crono;
@@ -34,36 +33,39 @@ public class EnemyAI : MonoBehaviour
     {
         enemyAnimator = GetComponent<Animator>();
         target = GameObject.Find("Player1");
-
-        //colliderWeapon = enemyWeapon.GetComponent<BoxCollider>();
-
+        //The collider of the enemy attack stops working
         colliderWeapon.enabled = false;
     }
 
     private void Attackstart()
     {
+        //The collider of the enemy attack starts working
         colliderWeapon.enabled = true;
         AudioManager.instance.PlaySFX(enemyAttackSound);
     }
     private void AttackEnd()
     {
+        //The collider of the enemy attack stops working
         colliderWeapon.enabled = false;
     }
 
     private void LateUpdate()
     {
+        //The boolean "Attack 01" changes its value depending on "isAttacking"
         enemyAnimator.SetBool("Attack 01", isAttacking);
     }
 
     public void EnemyBehaviour()
     {
+        //If the enemy is not close to the enemy...
         if (Vector3.Distance(transform.position, target.transform.position) > 10)
         {
+            //The boolean "Run Forward" changes its value depending to false
             enemyAnimator.SetBool("Run Forward", false);
             crono += 1 * Time.deltaTime;
             isAttacking = false;
             
-            
+            //The enemy has a rutine in which he has different posible behaviours/movement
             if (crono >= 4)
             {
                 rutine = Random.Range(0, 2);
@@ -88,8 +90,10 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
+            //If the enemy is in a certain distance from the player...
             if (Vector3.Distance(transform.position, target.transform.position) > 1 && !isAttacking)
             {
+                //The enemy starts chasing the player
                 var lookPos = target.transform.position - transform.position;
                 lookPos.y = 0;
                 var rotation = Quaternion.LookRotation(lookPos);
@@ -102,6 +106,7 @@ public class EnemyAI : MonoBehaviour
                 isAttacking = false;
             }
             else
+            //The enemy attacks
             {
                 enemyAnimator.SetBool("Walk Forward", false);
                 enemyAnimator.SetBool("Run Forward", false);
@@ -113,32 +118,40 @@ public class EnemyAI : MonoBehaviour
 
     public void FinalAni()
     {
+        //The attack animation ends
         enemyAnimator.SetBool("Attack 01", false);
         isAttacking = false;
     }
 
     public void FinalAni2()
     {
+        //The getting damage animation ends
         enemyAnimator.SetBool("Damage", false);
     }
 
     public void enemyDamage()
     {
+        //The enemy loses health when it gets hit
         enemyHealth--;
+        //We play the sound
         AudioManager.instance.PlaySFX(enemyHitSound);
+        //We instantiate the particle
         Instantiate(enemyHit, transform.position, transform.rotation);
 
         if (enemyHealth <= 0)
         {
+            //If the enemy health gets to 0, we instantiate the respective particles and sound and the enemy gets destroy
             Instantiate(enemyEffect, transform.position, transform.rotation);
             Instantiate(enemyCoinEffect, transform.position, transform.rotation);
             AudioManager.instance.PlaySFX(enemyDeathSound);
+            //We call the function "addPoints"
             GameManager.instance.addPoints(value);
             Destroy(gameObject);
         }
         else
         {
             enemyAnimator.SetBool("Attack 01", false);
+            //If the enemy doesn't die, the take damage animation starts
             enemyAnimator.SetBool("Damage", true);
             isAttacking = false;
         }

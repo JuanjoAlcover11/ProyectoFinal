@@ -13,6 +13,7 @@ public class HealthUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //When we pick the health item...
         if (other.tag == "Player")
         {
             Destroy(gameObject);
@@ -23,10 +24,12 @@ public class HealthUp : MonoBehaviour
 
             if (isHealthFull)
             {
+                //If the health is full, we reset it
                 HealthManager.instance.ResetHealth();
             }
             else
             {
+                //If not, we restore it
                 HealthManager.instance.AddHealth(healAmount);
             }
         }

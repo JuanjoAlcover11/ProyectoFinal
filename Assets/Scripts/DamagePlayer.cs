@@ -10,7 +10,9 @@ public class DamagePlayer : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            //We call the function "Damage"
             HealthManager.instance.Damage();
+            //We play the sound
             AudioManager.instance.PlaySFX(hitSound);
         }
     }

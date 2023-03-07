@@ -20,18 +20,14 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
+            //If the instance already exists, we destroy it
             Destroy(gameObject);
         }
     }
     void Start()
     {
+        //We play the first audio in our music array
         PlayMusic(0);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void PlayMusic(int musicToPlay)
@@ -46,10 +42,12 @@ public class AudioManager : MonoBehaviour
 
     public void SetMusicLevel()
     {
+        //The music volume changes with the music slider
         musicMixer.audioMixer.SetFloat("MusicVolume", UIManager.instance.musicSlider.value);
     }
     public void SetSFXLevel()
     {
+        //The SFX volume changes with the SFX slider
         sfxMixer.audioMixer.SetFloat("SFXVolume", UIManager.instance.sfxSlider.value);
     }
 }

@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour
     public int swordSound;
     public int deathSound;
 
-    //public GameObject swordParticle;
-
     private void Awake()
     {
         if (instance == null)
@@ -44,6 +42,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            //If the instance already exists, we destroy it
             Destroy(gameObject);
         }
     }
@@ -53,7 +52,6 @@ public class PlayerController : MonoBehaviour
         isGameOver = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         isAttacking = false;
@@ -67,7 +65,6 @@ public class PlayerController : MonoBehaviour
                 {
                     moveDirection.y = jumpForce;
                     AudioManager.instance.PlaySFX(jumpSound);
-                    // animator.SetBool("isAttacking", false);
                 }
             }
             else
@@ -91,14 +88,12 @@ public class PlayerController : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0f, playerCamera.transform.rotation.eulerAngles.y, 0f);
                     Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
                     playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
-                    //animator.SetBool("isAttacking", false);
                 }
 
                 if (Input.GetMouseButtonDown(0))
                 {
                     isAttacking = true;
                     AudioManager.instance.PlaySFX(swordSound);
-                    //Instantiate(swordParticle, transform.position, transform.rotation);
                 }
 
             }
@@ -113,8 +108,6 @@ public class PlayerController : MonoBehaviour
                 moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
 
                 charController.Move(moveDirection * Time.deltaTime);
-
-                // animator.SetBool("isAttacking", false);
 
                 if (knockBackCounter <= 0)
                 {

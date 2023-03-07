@@ -8,6 +8,7 @@ public class PlatformAttach : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //When the player touches the platforms, it becomes it's child
         if (other.gameObject == Player)
         {
             Player.transform.parent = transform;
@@ -16,6 +17,7 @@ public class PlatformAttach : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        //The player is no longer the platform's child
         if (other.gameObject == Player)
         {
             Player.transform.parent = null;

@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class KillPlayer : MonoBehaviour
 {
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
+            //The player gets killed and we change to the scene "gameover"
             GameManager.instance.GameOver();
             PlayerController.instance.PlayerDeath();
         }

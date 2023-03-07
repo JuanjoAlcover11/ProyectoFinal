@@ -10,23 +10,17 @@ public class CoinPickUp : MonoBehaviour
 
     public int coinSound;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
+            //We call the function "addPoints"
             GameManager.instance.addPoints(value);
+            //The coin gets destroyed
             Destroy(gameObject);
+            //We instantiate the particle
             Instantiate(coinEffect, transform.position, transform.rotation);
+            //We play the sound
             AudioManager.instance.PlaySFX(coinSound);
         }
     }
