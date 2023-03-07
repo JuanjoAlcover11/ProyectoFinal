@@ -24,12 +24,14 @@ public class SceneManagment : MonoBehaviour
     public void Restart()
     {//Game scene
         Time.timeScale = 1f;
+        DataPersistance.PlayerStats.currentScore = 0;
         SceneManager.LoadScene("MainScene");
     }
 
     public void StartGame()
     {//Game scene
         StartCoroutine(StartWait());
+        DataPersistance.PlayerStats.currentScore = 0;
     }
 
     public void MainMenu()

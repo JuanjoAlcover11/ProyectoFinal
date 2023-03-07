@@ -26,13 +26,13 @@ public class DataPersistance : MonoBehaviour
 
     void Start()
     {
-        currentScore = PlayerPrefs.GetInt("SCORE");
+        currentScore = PlayerPrefs.GetInt("CURRENTPOINTS");
         //Score points
     }
 
 
     public void SaveStats()
     {//We save the score
-        PlayerPrefs.SetInt("SCORE", currentScore);
+        PlayerPrefs.SetInt("CURRENTPOINTS", currentScore);
     }
 }

@@ -17,7 +17,8 @@ public class HealthManager : MonoBehaviour
 
     public Sprite[] healthBarImages;
 
-    private Volume volume;
+    public Volume volume;
+
     private void Awake()
     {
         if (instance == null)
@@ -32,6 +33,10 @@ public class HealthManager : MonoBehaviour
     void Start()
     {
         ResetHealth();
+        if (volume.profile.TryGet<Vignette>(out var vignette))
+        {
+            vignette.active = false;
+        }
     }
 
     // Update is called once per frame
@@ -94,6 +99,10 @@ public class HealthManager : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        if (volume.profile.TryGet<Vignette>(out var vignette))
+        {
+            vignette.active = false;
+        }
         UpdateUI();
     }
 
@@ -117,6 +126,10 @@ public class HealthManager : MonoBehaviour
                 break;
             case 1:
                 UIManager.instance.healthImage.sprite = healthBarImages[0];
+                if (volume.profile.TryGet<Vignette>(out var vignette))
+                {
+                    vignette.active = true;
+                }
                 break;
             case 0:
                 UIManager.instance.healthImage.enabled = false;

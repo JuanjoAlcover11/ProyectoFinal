@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI pointsText;
 
     public GameObject optionsPanel;
+    public GameObject controlsPanel;
 
     public Slider musicSlider, sfxSlider;
 
@@ -33,6 +34,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        pointsText.text = DataPersistance.PlayerStats.currentScore.ToString();
+    }
+
     public void OpenOptions()
     {
         optionsPanel.SetActive(true);
@@ -41,6 +47,16 @@ public class UIManager : MonoBehaviour
     public void CloseOptions()
     {
         optionsPanel.SetActive(false);
+    }
+
+    public void OpenControls()
+    {
+        controlsPanel.SetActive(true);
+    }
+
+    public void CloseControls()
+    {
+        controlsPanel.SetActive(false);
     }
 
     public void SetMusicLevel()
