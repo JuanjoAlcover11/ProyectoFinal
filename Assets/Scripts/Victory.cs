@@ -10,10 +10,11 @@ public class Victory : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log(GameManager.instance);
             GameManager.instance.saveContador();
+            //We hide the cursor
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            //We change to the "You win" scene
             SceneManager.LoadScene("VictoryScene");
         }
     }

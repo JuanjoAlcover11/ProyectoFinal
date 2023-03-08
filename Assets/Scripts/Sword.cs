@@ -9,9 +9,8 @@ public class Sword : MonoBehaviour
         
         if (other.gameObject.tag == "Enemy")
         {
+            //The enemy gets hit when it touches the collider of the sword
             other.gameObject.GetComponent<EnemyAI>().enemyDamage();
-            Debug.Log("Attack");
-
         }
     }
 }

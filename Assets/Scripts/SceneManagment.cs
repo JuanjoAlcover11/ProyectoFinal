@@ -18,30 +18,35 @@ public class SceneManagment : MonoBehaviour
         }
         else
         {
+            //If the instance already exists, we destroy it
             Destroy(gameObject);
         }
     }
     public void Restart()
-    {//Game scene
+    {
+        //The game starts from the beginning
         Time.timeScale = 1f;
         DataPersistance.PlayerStats.currentScore = 0;
         SceneManager.LoadScene("MainScene");
     }
 
     public void StartGame()
-    {//Game scene
+    {
+        //We start the game with some delay for the menu animation
         StartCoroutine(StartWait());
         DataPersistance.PlayerStats.currentScore = 0;
     }
 
     public void MainMenu()
-    {//Menu scene
+    {
+        //We go to the main menu scene
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 
     public IEnumerator StartWait()
     {
+        //We set the delay for the StartGame and the player animation
         animator.SetBool("isStart", true);
         yield return new WaitForSeconds(1.2f);
         Time.timeScale = 1f;

@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
             if (charController.isGrounded && moveDirection.y < 0)
             {
                 moveDirection.y = -1.0f;
+                //Salto del personaje
                 if (Input.GetKeyDown("space"))
                 {
                     moveDirection.y = jumpForce;
@@ -69,18 +70,18 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                //Fisicas de la gravedad
                 moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
             }
 
             if (!isKnocking)
             {
+                //Movimiento del personaje
                 float yStore = moveDirection.y;
                 moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
                 moveDirection.Normalize();
                 moveDirection = moveDirection * moveSpeed;
                 moveDirection.y = yStore;
-
-
                 charController.Move(moveDirection * Time.deltaTime);
 
                 if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
@@ -92,6 +93,7 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(0))
                 {
+                    //Ataque
                     isAttacking = true;
                     AudioManager.instance.PlaySFX(swordSound);
                 }
@@ -99,6 +101,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (isKnocking)
             {
+                //When the player gets hit, he has some recoil
                 knockBackCounter -= Time.deltaTime;
 
                 float yStore = moveDirection.y;
@@ -114,8 +117,9 @@ public class PlayerController : MonoBehaviour
                     isKnocking = false;
                 }
             }
-
+            //We set the speed of the player for the float that controls the running animation
             animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
+            //We set the boolean "isGrounded" that controls the jumping animation
             animator.SetBool("isGrounded", charController.isGrounded);
 
         }
@@ -123,6 +127,7 @@ public class PlayerController : MonoBehaviour
     
     public void Knockback()
     {
+        //The recoil/knockback values
         isKnocking = true;
         knockBackCounter = knockBackLength;
         moveDirection.y = knockBackPower.y;
@@ -131,11 +136,13 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+        //The boolean "isAttacking" changes its value depending on "isAttacking"
         animator.SetBool("isAttacking", isAttacking);
     }
 
     public void PlayerDeath()
     {
+        //We make the boolean "isgameover" true and we play the death audio
         isGameOver = true;
         AudioManager.instance.PlaySFX(deathSound);
     }
