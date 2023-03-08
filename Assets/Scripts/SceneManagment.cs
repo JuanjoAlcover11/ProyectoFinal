@@ -26,6 +26,8 @@ public class SceneManagment : MonoBehaviour
     {
         //The game starts from the beginning
         Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         DataPersistance.PlayerStats.currentScore = 0;
         SceneManager.LoadScene("MainScene");
     }
@@ -53,4 +55,5 @@ public class SceneManagment : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
+    
 }

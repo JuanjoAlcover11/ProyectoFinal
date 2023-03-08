@@ -26,6 +26,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {//The panel disapears and the game continues
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
@@ -34,6 +35,7 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {//The panel shows up and the game stops
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;

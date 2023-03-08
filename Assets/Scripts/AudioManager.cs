@@ -32,11 +32,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(int musicToPlay)
     {
+        //Plays the correspondent music
         music[musicToPlay].Play();
     }
 
     public void PlaySFX(int SFXToPlay)
     {
+        //Plays the correspondent SFX
         sfx[SFXToPlay].Play();
     }
 

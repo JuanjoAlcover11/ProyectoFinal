@@ -95,7 +95,11 @@ public class PlayerController : MonoBehaviour
                 {
                     //Ataque
                     isAttacking = true;
-                    AudioManager.instance.PlaySFX(swordSound);
+                    //The sound only plays if the game isn't paused
+                    if (Time.timeScale == 1)
+                    {
+                        AudioManager.instance.PlaySFX(swordSound);
+                    }
                 }
 
             }
